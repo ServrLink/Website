@@ -1,0 +1,24 @@
+h1 {
+    color: black;
+}
+
+blockquote {
+    border-left: 5px solid #448aff;
+}
+.logo-wrapper {
+    height: 64px;
+    max-height: 64px;
+}
+
+.content {
+    padding-top: 20px;
+}
+
+.card {
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}

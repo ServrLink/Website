@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ServrLink</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </head>
+    <body>
+        <script>
+            function copy() {
+                const el = document.createElement('textarea');
+                el.value = "servr.link";
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                toast("Copied")
+            }
+
+            function toast(str) {
+                M.toast({html: str});
+            }
+        </script>
+
+        <nav>
+            <div class="nav-wrapper blue accent-2">
+                <a href="#" class="brand-logo right">
+                    <img class="logo-wrapper" src="assets/img/logo.png" />
+                </a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="#link">Link Your Account</a></li>
+                    <li><a href="#info">About ServrLink</a></li>
+                    <li><a href="#api">Using The API</a></li>
+                    <li><a href="#security">Security</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+                        <a name="link">
+                            <div class="card grey darken-4">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Link Your Account</span>
+                                    <p>To link your Minecraft account to your Discord account, you must first join our verification server on Minecraft. Connect to the following server in your Minecraft client:</p>
+                                    <blockquote class="">
+                                        <b>servr.link</b>
+                                    </blockquote>
+                                    <p>Once ingame, you will be automatically provided with a link in the chat. Click the link to be taken to the Discord login page.</p>
+                                </div>
+                                <div class="card-action">
+                                    <a class="waves-effect waves-light btn" onclick="copy()"><i class="material-icons left">content_copy</i>Copy IP</a>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <a name="info">
+                            <div class="card grey darken-4">
+                                <div class="card-content white-text">
+                                    <span class="card-title">About ServrLink</span>
+                                    <p>
+                                        I was inspired to create ServrLink after seeing the large amount of resources linking Minecraft accounts to Discord accounts. I thought that in order to improve efficiency for both server owners and players,
+                                        a centralised service should be created so that authentication only has to happen once, ever.
+
+                                        <br />
+                                        <br />
+                                        Our technology stack consists of a NodeJS application called Registry that handles all requests. Underneath this, we use Redis to store verification keys, and MariaDB to store Minecraft UUIDs and Discord IDs permanently.
+                                        In the future, we hope to create more Registry variants using different stacks, for example, a Golang application using MongoDB as the backend driver to make it more viable to host your own private Registry.
+
+                                        <br />
+                                        <br />
+                                        When a user joins the servr.link Minecraft server, a verification key is created and assigned to the player's UUID in the Redis cache, with an expiry of 10 minutes to prevent bruteforcing. The user is then provided with
+                                        a link that points to our Registry server whereby the verification key is stored in a cookie, and the user is redirected to Discord to complete an oauth challenge. Our servers are then sent a temporary access token,
+                                        which is used to retrieve the user's public Discord user ID, before being discarded. The Minecraft UUID is then retrieved from the Redis cache using the verification key stored in the cookie. Finally, the Minecraft UUID
+                                        is stored with the Discord user ID in the MariaDB database.
+                                    </p>
+                                </div>
+                                <div class="card-action">
+                                    <a class="waves-effect waves-light btn" href="https://github.com/ServrLink"><i class="material-icons left">code</i>Source Code</a>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <a name="api">
+                            <div class="card grey darken-4">
+                                <div class="card-content white-text">
+                                    <span class="card-title white-text">Using The API</span>
+                                    <p class="white-text">
+                                        The API is ratelimited to 600 requests per 10 minutes. It is unlikely that you will reach this limit, however, if you do, you are expected to implement some kind of local caching system. If you genuinely need more than
+                                        600 requests per 10 minutes, email us at <i>contact@servr.link</i>
+
+                                        <br />
+                                        <br />
+                                        API endpoints:
+                                    </p>
+                                    <div class="endpoints">
+                                        <div class="collection">
+                                            <a class="collection-item">go.servr.link/api/discord/isregistered?id=</a>
+                                            <a class="collection-item">go.servr.link/api/minecraft/isregistered?uuid=</a>
+                                            <a class="collection-item">go.servr.link/api/discord/getuuid?id=</a>
+                                            <a class="collection-item">go.servr.link/api/minecraft/getid?uuid=</a>
+                                        </div>
+                                    </div>
+
+                                    <p>
+                                        However, if you're using the API through Minecraft, you can depend on the ServrLink plugin, which includes a wrapper for the API. If you are developing in Java, but not for Minecraft (for example, JDA), you could
+                                        take the API classes from the Minecraft plugin and add them to your program.
+                                    </p>
+                                </div>
+                                <div class="card-action">
+                                    <a class="waves-effect waves-light btn" href="https://github.com/ServrLink/Plugin"><i class="material-icons left">storage</i>ServrLink Plugin API</a>
+                                    <a class="waves-effect waves-light btn" href="https://gist.github.com/Dot-Rar/ea4f5056752260ce58289c406b1a1f7d"><i class="material-icons left">content_cut</i>Java Snippet</a>
+                                    <a class="waves-effect waves-light btn" href="https://servrlink.github.io/Plugin/"><i class="material-icons left">comment</i>Javadocs</a>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <a name="security">
+                            <div class="card grey darken-4">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Security</span>
+                                    <p>
+                                        You may be worried about the security of your data, however, there is no need to worry.
+                                        We have a robust and open-source system, which means that anyone can view the code and flag up issues or make improvements.
+                                        <br />
+                                        In addition to this, we handle very little of your data. Minecraft account verification is handled through joining the verification server, which means that your Mojang account credentials never come into contact with us.
+                                        When you authenticate your Discord account, Discord handles all of the authentication, and only provides us with a temporary access token that is used to retrieve your public Discord user ID, and then is discarded.
+                                        This means that we only store your Minecraft UUID and Discord user ID.
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ServrLink</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </head>
+    <body style="background-color: #bdbdbd;">
+        <script>
+            M.toast({html: "Redirecting you..."});
+            setTimeout(() => {
+                window.location.href = "/index.html"
+            }, 5 * 1000);
+        </script>
+
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+                        <a name="link">
+                            <div class="card teal accent-4">
+                                <div class="card-content white-text">
+                                    <p>Your account was linked successfully!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
